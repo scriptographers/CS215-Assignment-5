@@ -1,9 +1,9 @@
 clc;
 clear;
 close all;
-rng(0);
+rng(42);
 
-n_epochs = 500; % Same as M in the problem statement (>= 100)
+M_iters = 500;
 
 % Parameters
 % True
@@ -18,13 +18,13 @@ b = 11.5;
 
 N_vals = [5, 10, 20, 40, 60, 80, 100, 500, 10^3, 10^4];
 len_n = length(N_vals);
-MLE = zeros(len_n, n_epochs);
-MAP1 = zeros(len_n, n_epochs);
-MAP2 = zeros(len_n, n_epochs);
+MLE = zeros(len_n, M_iters);
+MAP1 = zeros(len_n, M_iters);
+MAP2 = zeros(len_n, M_iters);
 
 for i = 1:1:len_n
     N = N_vals(i);
-    for j = 1:1:n_epochs
+    for j = 1:1:M_iters
         % Data generation
         data = mu_true + s_true*randn([N, 1]);
         avg = sum(data)/N;
@@ -49,6 +49,8 @@ for i = 1:1:len_n
 end
 
 % Remove unnecessary data from the workspace:
+clear i;
+clear j;
 clear N;
 clear avg;
 clear mus;
