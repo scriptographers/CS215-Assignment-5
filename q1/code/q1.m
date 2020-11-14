@@ -72,7 +72,7 @@ xlabel("N values");
 ylabel("Relative error");
 ylim([0 max_error]);
 title("ML Estimate");
-saveas(gcf, "plots/q1/mle.jpg");
+saveas(gcf, "../results/mle.jpg");
 
 % MAP1:
 figure;
@@ -81,7 +81,7 @@ xlabel("N values");
 ylabel("Relative error");
 ylim([0 max_error]);
 title("MAP_1 Estimate");
-saveas(gcf, "plots/q1/map1.jpg");
+saveas(gcf, "../results/map1.jpg");
 
 % MAP2:
 figure;
@@ -90,4 +90,7 @@ xlabel("N values");
 ylabel("Relative error");
 ylim([0 max_error]);
 title("MAP_2 Estimate");
-saveas(gcf, "plots/q1/map2.jpg");
+saveas(gcf, "../results/map2.jpg");
+
+close all;
+
