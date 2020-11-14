@@ -2,7 +2,7 @@ clc;
 clear;
 close all;
 
-M_iters = 500;
+M_iters = 100;
 
 % Parameters
 l_true = 5; % True Lambda
@@ -22,15 +22,15 @@ for i = 1:1:len_n
         % Data generation
         x = rand([N, 1]);
         y = (-1/l_true)*log(x);
-        y_sum = sum(y); 
+        y_sum = sum(y);
         
         % ML Estimate
         ml_estimate = N/y_sum;
         e_mle = abs(ml_estimate - l_true)/l_true;
         MLE(i, j) = e_mle;
-
+        
         % PM Estimate
-        pm_estimate = (N + a - 1)/(b * (1 + y_sum));
+        pm_estimate = (N + a - 1)/(b + y_sum);
         e_pm = abs(pm_estimate - l_true)/l_true;
         PME(i, j) = e_pm;
     end
@@ -47,7 +47,7 @@ max_error = max([max(MLE(:)), max(PME(:))]);
 boxplot(MLE', N_vals);
 xlabel("N values");
 ylabel("Relative error");
-% ylim([0 max_error]);
+ylim([0 max_error]);
 title("Maximum Likelihood Estimate");
 saveas(gcf, "../results/mle.jpg");
 
@@ -56,7 +56,7 @@ figure;
 boxplot(PME', N_vals);
 xlabel("N values");
 ylabel("Relative error");
-% ylim([0 max_error]);
+ylim([0 max_error]);
 title("Posterior Mean Estimate");
 saveas(gcf, "../results/pme.jpg");
 
