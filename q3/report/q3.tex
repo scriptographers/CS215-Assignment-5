@@ -1,0 +1,115 @@
+\documentclass[11pt, fleqn]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{ulem}
+\usepackage{enumitem}
+\usepackage[left=0.75in, right=0.75in, bottom=0.75in]{geometry}
+% \usepackage{float}
+\usepackage{floatrow}
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
+
+\usepackage{sectsty}
+\sectionfont{\centering}
+
+\usepackage[perpage]{footmisc}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{190100044 \& 190100055}
+\rhead{CS 215: Assignment 5}
+\renewcommand{\footrulewidth}{1.0pt}
+\cfoot{Page \thepage}
+
+\setlength{\parindent}{0em}
+\renewcommand{\arraystretch}{2}%
+
+\title{Assignment 5: CS 215}
+\author{
+\begin{tabular}{|c|c|}
+     \hline
+     Devansh Jain & Harshit Varma \\
+     \hline
+     190100044 & 190100055 \\
+     \hline
+\end{tabular}
+}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\renewcommand{\arraystretch}{1}
+
+\section*{Question 3}
+\addcontentsline{toc}{section}{Question 3}
+\setcounter{equation}{0}
+\setcounter{figure}{0}
+
+\textbf{Prior}: 
+$$
+    p(\theta) = K\left(\frac{\theta_m}{\theta}\right)^{\alpha}I(\theta \ge \theta_m)
+$$
+\textbf{Likelihood}:\\
+Let $x_M = \max\{x_i\}_{i=1}^n$
+$$
+    L(\{x_i\}_{i=1}^n|\theta) = \frac{1}{\theta^n}I(\theta 
+    \ge x_M)
+$$
+For maximizing/computing the mean, we would want Posterior to be non-zero.\\
+This will be possible iff $\theta \ge \max\{x_M, \theta_m\}$\\
+Let $M = \max\{x_M, \theta_m\}$\\
+Thus, a constraint on $\theta$ is $\theta \ge M$\\
+  
+\medskip
+\textbf{Evidence}:\\
+$$
+    \begin{aligned}
+        e(\{x_i\}_{i=1}^n) &= \int_{M}^{\infty}L(\{x_i\}_{i=1}^n|\theta)d\theta\\
+        &= \frac{1}{(n-1)M^{n-1}}
+    \end{aligned}
+$$
+
+\textbf{Posterior}:
+$$
+\begin{aligned}
+  g(\theta|\{x_i\}_{i=1}^n) &= \frac{p(\theta)\cdot L(\{x_i\}_{i=1}^n|\theta)}{e(\{x_i\}_{i=1}^n)}\\
+  &= K(n-1)(M^{n-1})\left(\frac{\theta_m}{\theta}\right)^{\alpha}I(\theta \ge \theta_m)\frac{1}{\theta^n}I(\theta 
+    \ge x_M)\\
+  &= K(n-1)(M^{n-1})\left(\frac{\theta_m}{\theta}\right)^{\alpha}\frac{1}{\theta^n}I(\theta 
+    \ge M)\\
+  &= K' \left(\frac{M}{\theta}\right)^{n + \alpha}I(\theta 
+    \ge M)
+\end{aligned}
+$$
+This exactly matches the form of Pareto$(M, n+\alpha)$.\\
+Since both the posterior and Pareto$(M, n+\alpha)$ integrate to 1, the normalizing constant is same in both, thus the posterior exactly equals Pareto$(M, n+\alpha)$.
+
+\subsection*{ML Estimate}
+Likelihood is maximized when $\theta$ takes the least value it is allowed to take, $= x_M$ (Here, we ignore the prior and thus ignore the constraints arising due to the prior)
+$$
+    \boxed{\theta_{ML} = x_M}
+$$
+\subsection*{MAP Estimate}
+Mode of the Posterior Pareto($M, n+\alpha$) distribution occurs at $M$
+$$
+    \boxed{\theta_{MAP} = M}
+$$
+\subsection*{Posterior Mean Estimate}
+This is equal to the mean of the Posterior Pareto($M, n+\alpha$) distribution
+$$
+    \boxed{\theta_{PME} = \left(\frac{\alpha + n - 1}{\alpha + n - 2}\right)M}
+$$
+  
+\medskip
+Neither the MAP estimate, nor the PME estimate tends to the ML estimate when $M \neq x_M$.\\
+This is not desirable, as ideally more data should improve our estimates.\\
+When $M = x_M$, then both MAP and PME estimates tends to the ML estimate as $n$ increases.
+
+\end{document}
