@@ -1,7 +1,6 @@
 clc;
 clear;
 close all;
-rng(42);
 
 M_iters = 500;
 
@@ -23,6 +22,7 @@ MAP1 = zeros(len_n, M_iters);
 MAP2 = zeros(len_n, M_iters);
 
 for i = 1:1:len_n
+    rng(2*i);
     N = N_vals(i);
     for j = 1:1:M_iters
         % Data generation
@@ -67,6 +67,7 @@ clear map2_estimate;
 max_error = max([max(MLE(:)), max(MAP1(:)), max(MAP2(:))]);
 
 % MLE:
+figure("visible", "off");
 boxplot(MLE', N_vals);
 xlabel("N values");
 ylabel("Relative error");
@@ -75,7 +76,7 @@ title("ML Estimate");
 saveas(gcf, "../results/mle.jpg");
 
 % MAP1:
-figure;
+figure("visible", "off");
 boxplot(MAP1', N_vals);
 xlabel("N values");
 ylabel("Relative error");
@@ -84,7 +85,7 @@ title("MAP_1 Estimate");
 saveas(gcf, "../results/map1.jpg");
 
 % MAP2:
-figure;
+figure("visible", "off");
 boxplot(MAP2', N_vals);
 xlabel("N values");
 ylabel("Relative error");
