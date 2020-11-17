@@ -71,22 +71,20 @@ Thus, a constraint on $\theta$ is $\theta \ge M$\\
 \textbf{Evidence}:\\
 $$
     \begin{aligned}
-        e(\{x_i\}_{i=1}^n) &= \int_{M}^{\infty}L(\{x_i\}_{i=1}^n|\theta)d\theta\\
-        &= \frac{1}{(n-1)M^{n-1}}
+        e(\{x_i\}_{i=1}^n) &= \int_{M}^{\infty}L(\{x_i\}_{i=1}^n|\theta) p(\theta) d\theta\\
+        &= \frac{K \theta_m^\alpha}{(n+\alpha-1)M^{n+\alpha-1}}
     \end{aligned}
 $$
 
 \textbf{Posterior}:
 $$
-\begin{aligned}
-  g(\theta|\{x_i\}_{i=1}^n) &= \frac{p(\theta)\cdot L(\{x_i\}_{i=1}^n|\theta)}{e(\{x_i\}_{i=1}^n)}\\
-  &= K(n-1)(M^{n-1})\left(\frac{\theta_m}{\theta}\right)^{\alpha}I(\theta \ge \theta_m)\frac{1}{\theta^n}I(\theta 
-    \ge x_M)\\
-  &= K(n-1)(M^{n-1})\left(\frac{\theta_m}{\theta}\right)^{\alpha}\frac{1}{\theta^n}I(\theta 
-    \ge M)\\
-  &= K' \left(\frac{M}{\theta}\right)^{n + \alpha}I(\theta 
-    \ge M)
-\end{aligned}
+    \begin{aligned}
+        g(\theta|\{x_i\}_{i=1}^n) &= \frac{p(\theta)\cdot L(\{x_i\}_{i=1}^n|\theta)}{e(\{x_i\}_{i=1}^n)}\\
+            &= \left(\frac{(n+\alpha-1) (M^{n+\alpha-1})}{K\theta_m^\alpha}\right) K\left(\frac{\theta_m}{\theta}\right)^{\alpha} I(\theta \ge \theta_m) \frac{1}{\theta^n} I(\theta \ge x_M)\\
+            &= (n+\alpha-1)(M^{n+\alpha-1})\frac{1}{\theta^{n+\alpha}}I(\theta \ge M)\\
+            &= K' \left(\frac{M}{\theta}\right)^{n + \alpha}I(\theta 
+        \ge M)
+    \end{aligned}
 $$
 This exactly matches the form of Pareto$(M, n+\alpha)$.\\
 Since both the posterior and Pareto$(M, n+\alpha)$ integrate to 1, the normalizing constant is same in both, thus the posterior exactly equals Pareto$(M, n+\alpha)$.
@@ -111,5 +109,9 @@ $$
 Neither the MAP estimate, nor the PME estimate tends to the ML estimate when $M \neq x_M$.\\
 This is not desirable, as ideally more data should improve our estimates.\\
 When $M = x_M$, then both MAP and PME estimates tends to the ML estimate as $n$ increases.
+
+\medskip
+The above result is justifiable - if we choose a prior of $\theta$ which only takes values greater than $x_M$, then we would never get $\theta$ such that it matches with ML Estimate which is $x_M$. \\
+Had this not been the case and $\theta_m \le x_M$, i.e., ML estimate lies in the domain of prior function of $\theta$, then we see that both MAP and PME tend to ML estimate (MAP is equal to ML estimate in this case).
 
 \end{document}
